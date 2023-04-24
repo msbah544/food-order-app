@@ -34,24 +34,15 @@ const Signup = ({ navigation }) => {
           <View style={{ paddingTop: 40 }}>
             <View style={{ paddingVertical: 5 }}>
               <Text style={{ fontSize: 18, fontWeight: "bold" }}>
-                Enter your email
+                Enter your phone / email
               </Text>
               <TextInput
-                label={`Email Address`}
+                label={`Email / Phone`}
                 keyboardType="email-address"
                 mode="outlined"
               />
             </View>
-            <View style={{ paddingVertical: 5 }}>
-              <Text style={{ fontSize: 18, fontWeight: "bold" }}>
-                Enter your mobile number
-              </Text>
-              <TextInput
-                label={`Phone Number`}
-                keyboardType="phone-pad"
-                mode="outlined"
-              />
-            </View>
+
             <View style={{ paddingVertical: 5 }}>
               <Text style={{ fontSize: 18, fontWeight: "bold" }}>
                 Enter your password

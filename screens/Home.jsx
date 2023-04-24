@@ -1,5 +1,5 @@
 import React from "react";
-import { View, ScrollView, Image, FlatList } from "react-native";
+import { View, ScrollView } from "react-native";
 import {
   Text,
   Appbar,
@@ -7,11 +7,18 @@ import {
   TextInput,
   Card,
   Button,
+  Divider,
 } from "react-native-paper";
+import { store } from "../foodItems";
 
 const Home = ({ navigation }) => {
-  const canteen = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  //const canteen = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
   const theme = useTheme();
+
+  const navigateToDetails = (item) => {
+    navigation.navigate("bnav", { item: item });
+  };
   return (
     <View style={{ backgroundColor: "#fff", flex: 1 }}>
       <Appbar.Header style={{ backgroundColor: "#fff" }} elevated={true}>
@@ -46,25 +53,49 @@ const Home = ({ navigation }) => {
                 Menu
               </Text>
             </View>
-
             <View>
-              {canteen &&
-                canteen.map((foodItem) => (
-                  <View key={foodItem}>
+              <View style={{}}>
+                {store &&
+                  store.map((item) => (
                     <Card
-                      style={{ marginVertical: 10, padding: 5 }}
-                      onPress={() => console.log("navigate to food details")}
+                      key={item.title}
+                      style={{ padding: 20, marginVertical: 10 }}
+                      onPress={() => navigateToDetails(item)}
                     >
-                      <Card.Content>
-                        <Text variant="titleLarge">Bread and Cheese</Text>
-                      </Card.Content>
-                      <Card.Cover source={require("../assets/bread.jpg")} />
-                      <Card.Actions style={{}}>
-                        <Button mode="outlined">D100</Button>
-                      </Card.Actions>
+                      <View
+                        style={{
+                          display: "flex",
+                          flexDirection: "row",
+                          justifyContent: "space-between",
+                          alignItems: "center",
+                        }}
+                      >
+                        <View style={{ width: 100 }}>
+                          <Text variant="titleMedium">{item.title}</Text>
+                        </View>
+                        <View
+                          style={{
+                            backgroundColor: "purple",
+                            height: 5,
+                            width: 100,
+                          }}
+                        >
+                          <Text style={{ fontWeight: "bold", color: "purple" }}>
+                            --------------
+                          </Text>
+                        </View>
+                        <View>
+                          <Text variant="titleMedium">D{item.cost}</Text>
+                        </View>
+                      </View>
+                      <View>
+                        <Text variant="labelSmall">
+                          Category: {item.category}
+                        </Text>
+                      </View>
                     </Card>
-                  </View>
-                ))}
+                  ))}
+              </View>
             </View>
           </View>
         </View>
