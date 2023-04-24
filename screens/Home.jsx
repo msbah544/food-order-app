@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { View, ScrollView } from "react-native";
 import {
   Text,
@@ -9,9 +9,12 @@ import {
   Button,
   Divider,
 } from "react-native-paper";
+import { getDocs, onSnapshot, query, collection } from "firebase/firestore";
 import { store } from "../foodItems";
+import { db } from "../firebase.config";
 
 const Home = ({ navigation }) => {
+  const [menuItems, setMenuItems] = useState(null);
   //const canteen = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
   const theme = useTheme();
@@ -19,6 +22,23 @@ const Home = ({ navigation }) => {
   const navigateToDetails = (item) => {
     navigation.navigate("bnav", { item: item });
   };
+
+  //query
+  //const q = query(colRef);
+  const colRef = collection(db, "menu");
+
+  useEffect(() => {
+    const subscriber = onSnapshot(colRef, (snapshot) => {
+      const menu = [];
+      snapshot.docs.map((doc) => {
+        menu.push({ ...doc.data(), id: doc.id });
+      });
+      setMenuItems(menu);
+      console.log(menuItems);
+    });
+    return () => subscriber();
+  }, []);
+
   return (
     <View style={{ backgroundColor: "#fff", flex: 1 }}>
       <Appbar.Header style={{ backgroundColor: "#fff" }} elevated={true}>
@@ -55,10 +75,10 @@ const Home = ({ navigation }) => {
             </View>
             <View>
               <View style={{}}>
-                {store &&
-                  store.map((item) => (
+                {menuItems &&
+                  menuItems.map((item) => (
                     <Card
-                      key={item.title}
+                      key={item.id}
                       style={{ padding: 20, marginVertical: 10 }}
                       onPress={() => navigateToDetails(item)}
                     >
@@ -71,7 +91,7 @@ const Home = ({ navigation }) => {
                         }}
                       >
                         <View style={{ width: 100 }}>
-                          <Text variant="titleMedium">{item.title}</Text>
+                          <Text variant="titleMedium">{item.name}</Text>
                         </View>
                         <View
                           style={{

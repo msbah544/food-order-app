@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { View, TouchableOpacity } from "react-native";
 import { Text, Appbar, Button, Avatar, useTheme } from "react-native-paper";
+import { db } from "../firebase.config";
+import { collection, addDoc } from "firebase/firestore";
 
 const PlaceOrder = ({ navigation, data }) => {
   const [quantity, setQuantity] = useState(1);
@@ -19,8 +21,12 @@ const PlaceOrder = ({ navigation, data }) => {
   };
 
   const addToCart = async (data) => {
-    //localStorage.setItem("cart", [].push(data));
-    //console.log(localStorage.getItem("cart"));
+    const colRef = collection(db, "cart");
+
+    addDoc(colRef, { ...data, orderQuantity: quantity }).then((doc) => {
+      console.log(doc.id);
+    });
+    //console.log(data);
   };
   return (
     <View style={{ flex: 1, backgroundColor: "#fff" }}>
@@ -33,7 +39,7 @@ const PlaceOrder = ({ navigation, data }) => {
       <View style={{ paddingHorizontal: 20 }}>
         <View style={{ paddingVertical: 20 }}>
           <Text variant="headlineMedium" style={{ fontWeight: "bold" }}>
-            {data && data.title}
+            {data && data.name}
           </Text>
         </View>
         <View
