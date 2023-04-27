@@ -193,18 +193,28 @@ const Home = ({ navigation }) => {
                             }
                           }
                         >
-                          <Text style={{ fontWeight: "bold", color: "purple" }}>
+                          <Text
+                            style={{ fontWeight: "bold", color: "#000080" }}
+                          >
                             D{item.cost * item.quantityOrdered}
                           </Text>
+                        </View>
+                        <View>
+                          <Switch
+                            value={item.selected}
+                            onValueChange={() => handleSelect(item)}
+                          />
                         </View>
                         <View
                           style={{
                             display: "flex",
                             flexDirection: "row",
+                            //justifyContent: "space-between",
                             //alignItems: "flex-start",
                           }}
                         >
                           <Chip
+                            style={{ width: 40 }}
                             disabled={
                               item.quantityOrdered == 1 ||
                               item.selected == false
@@ -218,22 +228,19 @@ const Home = ({ navigation }) => {
                             style={{
                               display: "flex",
                               justifyContent: "center",
+                              marginHorizontal: 3,
                             }}
                           >
                             <Text>{item.quantityOrdered}</Text>
                           </View>
                           <Chip
+                            //mode="outlined"
+                            style={{ width: 40 }}
                             disabled={item.selected == false}
                             icon="plus-circle-outline"
                             onPress={() => {
                               handleIncrement(item);
                             }}
-                          />
-                        </View>
-                        <View>
-                          <Switch
-                            value={item.selected}
-                            onValueChange={() => handleSelect(item)}
                           />
                         </View>
                       </View>
@@ -251,7 +258,7 @@ const Home = ({ navigation }) => {
                   >
                     <Image
                       style={{ width: 50, height: 50 }}
-                      source={require("../assets/loader.gif")}
+                      source={require("../assets/spinner.gif")}
                     />
                   </View>
                 )}
@@ -264,7 +271,7 @@ const Home = ({ navigation }) => {
         // icon=""
         label="Proceed To Checkout"
         //disabled={true}
-        // color="white"
+        color="white"
         style={styles.fab}
         onPress={() => navigateToCheckout()}
       />
@@ -282,7 +289,8 @@ const styles = StyleSheet.create({
     margin: 16,
     right: 0,
     bottom: 0,
-    // backgroundColor: "#000080",
+
+    backgroundColor: "#000080",
     // marginBottom: 70,
   },
 });

@@ -9,7 +9,14 @@ import {
   useTheme,
   Switch,
 } from "react-native-paper";
-import { onSnapshot, collection, doc, updateDoc } from "firebase/firestore";
+import {
+  onSnapshot,
+  collection,
+  doc,
+  updateDoc,
+  orderBy,
+  query,
+} from "firebase/firestore";
 import { db } from "../firebase.config";
 import {
   useFonts,
@@ -47,13 +54,14 @@ const Checkout = ({ navigation }) => {
   const theme = useTheme();
   useEffect(() => {
     const colRef = collection(db, "menu");
-    const subscriber = onSnapshot(colRef, (snapshot) => {
+    const q = query(colRef, orderBy("name", "asc"));
+    const subscriber = onSnapshot(q, colRef, (snapshot) => {
       const items = [];
       // snapshot.docs.filter(() => {
       //  items.push({ ...doc.data(), id: doc.id });
       //});
       snapshot.docs
-        .filter((doc) => doc.data().selected == false)
+        .filter((doc) => doc.data().selected == true)
         .map((doc) => {
           items.push({ ...doc.data(), id: doc.id });
         });
@@ -145,18 +153,26 @@ const Checkout = ({ navigation }) => {
                         }
                       }
                     >
-                      <Text style={{ fontWeight: "bold", color: "purple" }}>
+                      <Text style={{ fontWeight: "bold", color: "#000080" }}>
                         D{item.cost * item.quantityOrdered}
                       </Text>
+                    </View>
+                    <View>
+                      <Switch
+                        value={item.selected}
+                        onValueChange={() => handleSelect(item)}
+                      />
                     </View>
                     <View
                       style={{
                         display: "flex",
                         flexDirection: "row",
+                        //justifyContent: "space-between",
                         //alignItems: "flex-start",
                       }}
                     >
                       <Chip
+                        style={{ width: 40 }}
                         disabled={
                           item.quantityOrdered == 1 || item.selected == false
                         }
@@ -169,22 +185,19 @@ const Checkout = ({ navigation }) => {
                         style={{
                           display: "flex",
                           justifyContent: "center",
+                          marginHorizontal: 3,
                         }}
                       >
                         <Text>{item.quantityOrdered}</Text>
                       </View>
                       <Chip
+                        //mode="outlined"
+                        style={{ width: 40 }}
                         disabled={item.selected == false}
                         icon="plus-circle-outline"
                         onPress={() => {
                           handleIncrement(item);
                         }}
-                      />
-                    </View>
-                    <View>
-                      <Switch
-                        value={item.selected}
-                        onValueChange={() => handleSelect(item)}
                       />
                     </View>
                   </View>
@@ -202,7 +215,7 @@ const Checkout = ({ navigation }) => {
               >
                 <Image
                   style={{ width: 50, height: 50 }}
-                  source={require("../assets/loader.gif")}
+                  source={require("../assets/spinner.gif")}
                 />
               </View>
             )}
