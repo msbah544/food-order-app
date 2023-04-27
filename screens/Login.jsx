@@ -8,7 +8,7 @@ import {
   Button,
   Divider,
 } from "react-native-paper";
-
+import { createDocs } from "../firebase.config";
 const Login = ({ navigation }) => {
   const theme = useTheme();
   return (
@@ -81,6 +81,7 @@ const Login = ({ navigation }) => {
                 icon={`facebook`}
                 mode="elevated"
                 style={{ marginBottom: 10 }}
+                onPress={() => createDocs()}
               >
                 Facebook
               </Button>

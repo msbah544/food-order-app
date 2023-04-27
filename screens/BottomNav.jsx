@@ -7,7 +7,7 @@ import { CommonActions } from "@react-navigation/native";
 import { Text, BottomNavigation } from "react-native-paper";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import PlaceOrder from "./PlaceOrder";
-import OrderedItems from "./OrderedItems";
+import OrderedItems from "./Checkout";
 
 const Tab = createBottomTabNavigator();
 

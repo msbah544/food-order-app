@@ -4,30 +4,7 @@ import { Text, Appbar, Button, Avatar, useTheme } from "react-native-paper";
 import { db } from "../firebase.config";
 import { collection, addDoc } from "firebase/firestore";
 
-const PlaceOrder = ({ navigation, data }) => {
-  const [quantity, setQuantity] = useState(1);
-  const [originalPrice, setOriginalPrice] = useState(data && data.cost);
-
-  //const item = route.params?.item;
-
-  const increment = (quantity) => {
-    //let updatedCount = quantity+;
-    setQuantity(quantity + 1);
-    console.log(data);
-  };
-  const decrement = (quantity) => {
-    //let updatedCount = quantity--;
-    setQuantity(quantity - 1);
-  };
-
-  const addToCart = async (data) => {
-    const colRef = collection(db, "cart");
-
-    addDoc(colRef, { ...data, orderQuantity: quantity }).then((doc) => {
-      console.log(doc.id);
-    });
-    //console.log(data);
-  };
+const PlaceOrder = ({ navigation }) => {
   return (
     <View style={{ flex: 1, backgroundColor: "#fff" }}>
       <Appbar.Header style={{ backgroundColor: "#fff" }} elevated={true}>
