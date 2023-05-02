@@ -81,7 +81,7 @@ const Login = ({ navigation }) => {
                 icon={`facebook`}
                 mode="elevated"
                 style={{ marginBottom: 10 }}
-                onPress={() => createDocs()}
+                //onPress={() => createDocs()}
               >
                 Facebook
               </Button>
