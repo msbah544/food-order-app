@@ -14,7 +14,7 @@ export default function App() {
     ...DefaultTheme,
     colors: {
       ...DefaultTheme.colors,
-      primary: "#000080",
+      primary: "#231a97",
     },
   };
 

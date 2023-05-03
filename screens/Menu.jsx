@@ -46,7 +46,6 @@ import {
   SourceSansPro_900Black,
   SourceSansPro_900Black_Italic,
 } from "@expo-google-fonts/source-sans-pro";
-import AnimatedFab from "../components/AnimatedFab";
 
 const Menu = ({
   navigation,
@@ -322,7 +321,7 @@ const Menu = ({
                   </Button>*/}
       {showFAB && (
         <AnimatedFAB
-          //color="white"
+          //disabled={true}
           icon={"cart-check"}
           label={"checkout"}
           extended={isExtended}

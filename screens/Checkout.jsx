@@ -8,6 +8,7 @@ import {
   Chip,
   useTheme,
   Switch,
+  Button,
 } from "react-native-paper";
 import {
   onSnapshot,
@@ -16,6 +17,7 @@ import {
   updateDoc,
   orderBy,
   query,
+  addDoc,
 } from "firebase/firestore";
 import { db } from "../firebase.config";
 import {
@@ -35,7 +37,8 @@ import {
 } from "@expo-google-fonts/source-sans-pro";
 
 const Checkout = ({ navigation }) => {
-  const [orderedItems, setOrderedItems] = useState(null);
+  const [orderedItems, setOrderedItems] = useState([]);
+  const [total, setTotal] = useState(0);
   let [fontsLoaded] = useFonts({
     SourceSansPro_200ExtraLight,
     SourceSansPro_200ExtraLight_Italic,
@@ -57,16 +60,26 @@ const Checkout = ({ navigation }) => {
     const q = query(colRef, orderBy("name", "asc"));
     const subscriber = onSnapshot(q, colRef, (snapshot) => {
       const items = [];
-      // snapshot.docs.filter(() => {
-      //  items.push({ ...doc.data(), id: doc.id });
-      //});
+      const pay = [];
+
       snapshot.docs
         .filter((doc) => doc.data().selected == true)
         .map((doc) => {
           items.push({ ...doc.data(), id: doc.id });
+          //populate the pay array with cost of each selected item
+          pay.push(doc.data().cost * doc.data().quantityOrdered);
         });
       setOrderedItems(items);
       console.log(orderedItems);
+
+      //calculate cost
+      if (pay.length != 0) {
+        const result = pay.reduce((a, b) => {
+          return a + b;
+        });
+        setTotal(result);
+      }
+      console.log(total);
     });
     return () => subscriber();
   }, []);
@@ -106,6 +119,21 @@ const Checkout = ({ navigation }) => {
     await updateDoc(docRef, {
       quantityOrdered: item.quantityOrdered + 1,
     });
+  };
+
+  const placeOrder = () => {
+    console.log("ordered");
+    const colRef = collection(db, "cart");
+
+    orderedItems.forEach((item) => {
+      addDoc(colRef, {
+        name: `${item.name}`,
+        cost: item.cost,
+        quantityOrdered: item.quantityOrdered,
+        selected: `${item.selected}`,
+      });
+    });
+    addDoc(colRef, { total: total });
   };
 
   return (
@@ -220,6 +248,44 @@ const Checkout = ({ navigation }) => {
               </View>
             )}
           </View>
+          {orderedItems && (
+            <View>
+              <Card
+                style={{
+                  padding: 5,
+                  marginVertical: 5,
+                }}
+              >
+                <View
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "space-around",
+                    alignItems: "center",
+                  }}
+                >
+                  <Text style={{ fontWeight: "bold" }}>Total:</Text>
+                  <View
+                    style={{
+                      width: 100,
+                      height: 2,
+                      backgroundColor: "#231a97",
+                    }}
+                  ></View>
+                  <Text style={{ fontWeight: "bold" }}>D{total}</Text>
+                </View>
+              </Card>
+              <View style={{ paddingVertical: 20 }}>
+                <Button
+                  mode="contained"
+                  onPress={() => placeOrder()}
+                  disabled={total == 0}
+                >
+                  Place Order
+                </Button>
+              </View>
+            </View>
+          )}
         </View>
       </ScrollView>
     </View>

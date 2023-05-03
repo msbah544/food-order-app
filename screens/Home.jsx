@@ -32,6 +32,7 @@ const Home = ({ navigation }) => {
               style={{
                 marginVertical: 10,
                 padding: 40,
+                backgroundColor: "#231a97",
               }}
             >
               <View
@@ -41,8 +42,13 @@ const Home = ({ navigation }) => {
                   alignItems: "center",
                 }}
               >
-                <Image source={require("../assets/food-menu.png")} style={{}} />
-                <Text variant="titleSmall">MENU</Text>
+                <Image
+                  source={require("../assets/food-menu-white.png")}
+                  style={{}}
+                />
+                <Text variant="titleSmall" style={{ color: "white" }}>
+                  MENU
+                </Text>
               </View>
             </Card>
             <Card
@@ -51,6 +57,7 @@ const Home = ({ navigation }) => {
               style={{
                 marginVertical: 10,
                 padding: 40,
+                backgroundColor: "#231a97",
               }}
             >
               <View
@@ -60,8 +67,16 @@ const Home = ({ navigation }) => {
                   alignItems: "center",
                 }}
               >
-                <Image source={require("../assets/cart.png")} style={{}} />
-                <Text variant="titleSmall">ORDER HISTORY</Text>
+                <Image
+                  source={require("../assets/cart-white.png")}
+                  style={{}}
+                />
+                <Text variant="titleSmall" style={{ color: "white" }}>
+                  ORDER
+                </Text>
+                <Text variant="titleSmall" style={{ color: "white" }}>
+                  HISTORY
+                </Text>
               </View>
             </Card>
           </View>
