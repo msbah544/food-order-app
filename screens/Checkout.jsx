@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { View, ScrollView, Image, StyleSheet } from "react-native";
+import {
+  View,
+  ScrollView,
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+} from "react-native";
 import {
   Text,
   Appbar,
@@ -20,6 +26,9 @@ import {
   addDoc,
 } from "firebase/firestore";
 import { db } from "../firebase.config";
+import Prepaid from "../components/Prepaid";
+import Transfer from "../components/Transfer";
+
 import {
   useFonts,
   SourceSansPro_200ExtraLight,
@@ -39,6 +48,9 @@ import {
 const Checkout = ({ navigation }) => {
   const [orderedItems, setOrderedItems] = useState([]);
   const [total, setTotal] = useState(0);
+  const [prePaidSelected, setPrePaidSelected] = useState(false);
+  const [transferSelected, setTransferSelected] = useState(false);
+
   let [fontsLoaded] = useFonts({
     SourceSansPro_200ExtraLight,
     SourceSansPro_200ExtraLight_Italic,
@@ -146,7 +158,7 @@ const Checkout = ({ navigation }) => {
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={{ paddingHorizontal: 20 }}>
           <View style={{}}>
-            {orderedItems ? (
+            {orderedItems.length != 0 ? (
               orderedItems.map((item) => (
                 <View
                   style={styles.itemContainer}
@@ -248,7 +260,7 @@ const Checkout = ({ navigation }) => {
               </View>
             )}
           </View>
-          {orderedItems && (
+          {orderedItems.length != 0 && (
             <View>
               <Card
                 style={{
@@ -275,14 +287,45 @@ const Checkout = ({ navigation }) => {
                   <Text style={{ fontWeight: "bold" }}>D{total}</Text>
                 </View>
               </Card>
+              <Card
+                style={{ marginTop: 25, padding: 10 }}
+                onPress={() => navigation.goBack()}
+              >
+                <View
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <Text>Add More Items</Text>
+                </View>
+              </Card>
               <View style={{ paddingVertical: 20 }}>
                 <Button
                   mode="contained"
                   onPress={() => placeOrder()}
-                  disabled={total == 0}
+                  disabled={
+                    prePaidSelected == false && transferSelected == false
+                      ? true
+                      : false
+                  }
                 >
                   Place Order
                 </Button>
+              </View>
+              <View>
+                <Text variant="headlineSmall">Payment Options</Text>
+                <Prepaid
+                  prePaidSelected={prePaidSelected}
+                  setPrePaidSelected={setPrePaidSelected}
+                  setTransferSelected={setTransferSelected}
+                />
+                <Transfer
+                  transferSelected={transferSelected}
+                  setTransferSelected={setTransferSelected}
+                  setPrePaidSelected={setPrePaidSelected}
+                />
               </View>
             </View>
           )}
