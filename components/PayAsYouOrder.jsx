@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 import { View, TouchableOpacity } from "react-native";
 import { Text, Switch, List } from "react-native-paper";
 
-const Transfer = ({
-  transferSelected,
-  setTransferSelected,
+const PayAsYouOrder = ({
+  prePaidSelected,
   setPrePaidSelected,
+  setTransferSelected,
 }) => {
   const [showInstructions, setShowInstructions] = useState(false);
   return (
@@ -35,14 +35,14 @@ const Transfer = ({
                 marginRight: 3,
               }}
             ></View>
-            <Text variant="titleMedium">Bank Transfer</Text>
+            <Text variant="titleMedium">Pay As You Order</Text>
           </View>
           <View>
             <Switch
-              value={transferSelected}
+              value={prePaidSelected}
               onValueChange={() => {
-                setTransferSelected(!transferSelected);
-                setPrePaidSelected(false);
+                setPrePaidSelected(!prePaidSelected);
+                setTransferSelected(false);
               }}
             />
           </View>
@@ -75,7 +75,7 @@ const Transfer = ({
         {showInstructions && (
           <View>
             <List.AccordionGroup>
-              <List.Accordion title="Mobile Transfer" id="1">
+              <List.Accordion title="Mobile App Transfer" id="1">
                 <View
                   style={{
                     borderLeftWidth: 2,
@@ -85,8 +85,10 @@ const Transfer = ({
                   }}
                 >
                   <Text style={{ marginHorizontal: 5 }}>
-                    Pay with your Banking Mobile App e.g GTBank Mobile App,
-                    Ecobank Mobile App, e.t.c..
+                    Via your mobile banking app, you can transfer the order
+                    amount into the following bank account and attach evidence
+                    of the successful transfer.Please provide your unique
+                    student ID when making payment.
                   </Text>
                 </View>
                 <View
@@ -94,39 +96,10 @@ const Transfer = ({
                     borderLeftWidth: 2,
                     borderLeftColor: "blue",
                     marginLeft: 30,
-                    //marginBottom: 15,
                   }}
                 >
                   <Text style={{ marginHorizontal: 5 }}>
-                    After Transaction Is Complete, Keep the Receipt in a safe
-                    place as it will be needed later for proof of pay.
-                  </Text>
-                </View>
-              </List.Accordion>
-              <List.Accordion title="Cash Deposit" id="2">
-                <View
-                  style={{
-                    borderLeftWidth: 2,
-                    borderLeftColor: "blue",
-                    marginLeft: 30,
-                    marginBottom: 15,
-                  }}
-                >
-                  <Text style={{ marginHorizontal: 5 }}>
-                    Pay By Depositing Cash At The Bank.
-                  </Text>
-                </View>
-                <View
-                  style={{
-                    borderLeftWidth: 2,
-                    borderLeftColor: "blue",
-                    marginLeft: 30,
-                    //marginBottom: 15,
-                  }}
-                >
-                  <Text style={{ marginHorizontal: 5 }}>
-                    After Transaction Is Complete, Keep the Receipt in a safe
-                    place as it will be needed later for proof of pay.
+                    Vista Bank Account # 207-1234-354-110
                   </Text>
                 </View>
               </List.Accordion>
@@ -138,4 +111,4 @@ const Transfer = ({
   );
 };
 
-export default Transfer;
+export default PayAsYouOrder;

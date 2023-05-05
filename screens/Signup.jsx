@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, ScrollView } from "react-native";
 import {
   Text,
@@ -8,9 +8,25 @@ import {
   Button,
   Divider,
 } from "react-native-paper";
-
+import { getAuth } from "firebase/auth";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { authRef } from "../firebase.config";
 const Signup = ({ navigation }) => {
+  const [emailOrPhone, setEmailOrPhone] = useState("");
+  const [password, setPassword] = useState("");
+  const [studentID, setStudentID] = useState("");
   const theme = useTheme();
+
+  //create user
+  const createUser = () => {
+    const authRef = getAuth();
+
+    createUserWithEmailAndPassword(authRef, emailOrPhone, password)
+      .then((userCreds) => {
+        console.log(userCreds);
+      })
+      .catch((err) => console.log(err.message));
+  };
   return (
     <View style={{ backgroundColor: "#fff", flex: 1 }}>
       <Appbar.Header style={{ backgroundColor: "#fff" }} elevated={true}>
@@ -33,18 +49,20 @@ const Signup = ({ navigation }) => {
           </View>
           <View style={{ paddingTop: 40 }}>
             <View style={{ paddingVertical: 5 }}>
-              <Text style={{ fontSize: 18, fontWeight: "bold" }}>
+              <Text variant="titleMedium" style={{}}>
                 Enter your phone / email
               </Text>
               <TextInput
                 label={`Email / Phone`}
                 keyboardType="email-address"
                 mode="outlined"
+                value={emailOrPhone}
+                onChange={(e) => setEmailOrPhone(e.target.value)}
               />
             </View>
 
             <View style={{ paddingVertical: 5 }}>
-              <Text style={{ fontSize: 18, fontWeight: "bold" }}>
+              <Text variant="titleMedium" style={{}}>
                 Enter your password
               </Text>
               <TextInput
@@ -52,36 +70,29 @@ const Signup = ({ navigation }) => {
                 secureTextEntry={true}
                 right={<TextInput.Icon icon="eye" />}
                 mode="outlined"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </View>
+            <View style={{ paddingVertical: 5 }}>
+              <Text variant="titleMedium" style={{}}>
+                Enter Student ID
+              </Text>
+              <TextInput
+                label="student ID"
+                keyboardType="numeric"
+                //secureTextEntry={true}
+                //right={<TextInput.Icon icon="eye" />}
+                mode="outlined"
+                value={studentID}
+                onChange={(e) => setStudentID(e.target.value)}
               />
             </View>
           </View>
           <View style={{ paddingVertical: 50 }}>
-            <Button mode="contained">Sign Up</Button>
-          </View>
-          <View>
-            <Divider />
-            <View
-              style={{
-                paddingVertical: 5,
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <Text variant="labelLarge">Or Sign Up With</Text>
-            </View>
-            <View style={{ paddingVertical: 10 }}>
-              <Button
-                icon={`facebook`}
-                mode="elevated"
-                style={{ marginBottom: 10 }}
-              >
-                Facebook
-              </Button>
-              <Button icon={`google`} mode="elevated">
-                Google
-              </Button>
-            </View>
+            <Button mode="contained" onPress={createUser}>
+              Sign Up
+            </Button>
           </View>
         </View>
       </ScrollView>

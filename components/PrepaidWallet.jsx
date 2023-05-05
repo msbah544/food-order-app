@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 import { View, TouchableOpacity } from "react-native";
 import { Text, Switch, List } from "react-native-paper";
 
-const Prepaid = ({
-  prePaidSelected,
-  setPrePaidSelected,
+const PrepaidWallet = ({
+  transferSelected,
   setTransferSelected,
+  setPrePaidSelected,
 }) => {
   const [showInstructions, setShowInstructions] = useState(false);
   return (
@@ -35,14 +35,14 @@ const Prepaid = ({
                 marginRight: 3,
               }}
             ></View>
-            <Text variant="titleMedium">Pre-Paid</Text>
+            <Text variant="titleMedium">Pre Paid Wallet</Text>
           </View>
           <View>
             <Switch
-              value={prePaidSelected}
+              value={transferSelected}
               onValueChange={() => {
-                setPrePaidSelected(!prePaidSelected);
-                setTransferSelected(false);
+                setTransferSelected(!transferSelected);
+                setPrePaidSelected(false);
               }}
             />
           </View>
@@ -75,7 +75,7 @@ const Prepaid = ({
         {showInstructions && (
           <View>
             <List.AccordionGroup>
-              <List.Accordion title="Payment" id="1">
+              <List.Accordion title="Mobile App Deposit" id="1">
                 <View
                   style={{
                     borderLeftWidth: 2,
@@ -85,7 +85,11 @@ const Prepaid = ({
                   }}
                 >
                   <Text style={{ marginHorizontal: 5 }}>
-                    Payment must be done by cash at the shool.
+                    Pay any amount into your wallet allowing the value of your
+                    orders to be deducted as they are placed. To do this please
+                    use your mobile banking app to deposit money into the
+                    following bank account and attach evidence of transfer.
+                    Please provide your unique student ID when making payment.
                   </Text>
                 </View>
                 <View
@@ -93,26 +97,71 @@ const Prepaid = ({
                     borderLeftWidth: 2,
                     borderLeftColor: "blue",
                     marginLeft: 30,
+                    //marginBottom: 15,
                   }}
                 >
                   <Text style={{ marginHorizontal: 5 }}>
-                    After Payment is done. Amount will be sent to the wallet in
-                    the order app.
+                    Vista Bank Account # 207-1234-354-110
                   </Text>
                 </View>
               </List.Accordion>
-              <List.Accordion title="Wallet" id="3">
+              <List.Accordion title="Bank Deposit" id="2">
                 <View
                   style={{
                     borderLeftWidth: 2,
                     borderLeftColor: "blue",
                     marginLeft: 30,
-                    marginBottom: 10,
+                    marginBottom: 15,
                   }}
                 >
                   <Text style={{ marginHorizontal: 5 }}>
-                    For any order completed, the cost will be deducted from the
-                    Wallet and balance displayed.
+                    Pay any amount into your wallet allowing the value of your
+                    orders to be deducted as they are placed. To do this please
+                    visit the cashier's office on the school premises and
+                    deposit money into your wallet. Please provide your unique
+                    student ID when making payment.
+                  </Text>
+                </View>
+                <View
+                  style={{
+                    borderLeftWidth: 2,
+                    borderLeftColor: "blue",
+                    marginLeft: 30,
+                    //marginBottom: 15,
+                  }}
+                >
+                  <Text style={{ marginHorizontal: 5 }}>
+                    Vista Bank Account # 207-1234-354-110
+                  </Text>
+                </View>
+              </List.Accordion>
+              <List.Accordion title="In-School Cash Deposit" id="3">
+                <View
+                  style={{
+                    borderLeftWidth: 2,
+                    borderLeftColor: "blue",
+                    marginLeft: 30,
+                    marginBottom: 15,
+                  }}
+                >
+                  <Text style={{ marginHorizontal: 5 }}>
+                    Pay any amount into your wallet allowing the value of your
+                    orders to be deducted as they are placed. To do this please
+                    visit any local bank, and deposit money into the following
+                    bank account and attach evidence of transfer. Please provide
+                    your unique student ID when making payment.
+                  </Text>
+                </View>
+                <View
+                  style={{
+                    borderLeftWidth: 2,
+                    borderLeftColor: "blue",
+                    marginLeft: 30,
+                    //marginBottom: 15,
+                  }}
+                >
+                  <Text style={{ marginHorizontal: 5 }}>
+                    Vista Bank Account # 207-1234-354-110
                   </Text>
                 </View>
               </List.Accordion>
@@ -124,4 +173,4 @@ const Prepaid = ({
   );
 };
 
-export default Prepaid;
+export default PrepaidWallet;

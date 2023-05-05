@@ -20,7 +20,7 @@ const Login = ({ navigation }) => {
       </Appbar.Header>
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={{ paddingTop: 10, paddingHorizontal: 20 }}>
-          <View>
+          {/*<View>
             <Text variant="headlineSmall" style={{ fontWeight: "bold" }}>
               Hi, Welcome Back 👋
             </Text>
@@ -30,10 +30,10 @@ const Login = ({ navigation }) => {
             >
               Hello again, you've been missed!
             </Text>
-          </View>
+              </View>*/}
           <View style={{ paddingTop: 40 }}>
             <View style={{ paddingVertical: 5 }}>
-              <Text style={{ fontSize: 18, fontWeight: "bold" }}>
+              <Text variant="titleMedium" style={{}}>
                 Enter your email
               </Text>
               <TextInput
@@ -44,7 +44,7 @@ const Login = ({ navigation }) => {
             </View>
 
             <View style={{ paddingVertical: 5 }}>
-              <Text style={{ fontSize: 18, fontWeight: "bold" }}>
+              <Text variant="titleMedium" style={{}}>
                 Enter your password
               </Text>
               <TextInput
@@ -63,32 +63,6 @@ const Login = ({ navigation }) => {
             >
               Login
             </Button>
-          </View>
-          <View>
-            <Divider />
-            <View
-              style={{
-                paddingVertical: 5,
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <Text variant="labelLarge">Or Login With</Text>
-            </View>
-            <View style={{ paddingVertical: 10 }}>
-              <Button
-                icon={`facebook`}
-                mode="elevated"
-                style={{ marginBottom: 10 }}
-                //onPress={() => createDocs()}
-              >
-                Facebook
-              </Button>
-              <Button icon={`google`} mode="elevated">
-                Google
-              </Button>
-            </View>
           </View>
         </View>
       </ScrollView>

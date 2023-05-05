@@ -26,8 +26,8 @@ import {
   addDoc,
 } from "firebase/firestore";
 import { db } from "../firebase.config";
-import Prepaid from "../components/Prepaid";
-import Transfer from "../components/Transfer";
+import PayAsYouOrder from "../components/PayAsYouOrder";
+import PrepaidWallet from "../components/PrepaidWallet";
 
 import {
   useFonts,
@@ -316,12 +316,12 @@ const Checkout = ({ navigation }) => {
               </View>
               <View>
                 <Text variant="headlineSmall">Payment Options</Text>
-                <Prepaid
+                <PayAsYouOrder
                   prePaidSelected={prePaidSelected}
                   setPrePaidSelected={setPrePaidSelected}
                   setTransferSelected={setTransferSelected}
                 />
-                <Transfer
+                <PrepaidWallet
                   transferSelected={transferSelected}
                   setTransferSelected={setTransferSelected}
                   setPrePaidSelected={setPrePaidSelected}
