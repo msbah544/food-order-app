@@ -1,0 +1,29 @@
+{
+  "_tokenResponse": {
+    "email": "momodoubah544@gmail.com",
+    "expiresIn": "3600",
+    "idToken": "eyJhbGciOiJSUzI1NiIsImtpZCI6ImI2NzE1ZTJmZjcxZDIyMjQ5ODk1MDAyMzY2ODMwNDc3Mjg2Nzg0ZTMiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vZm9vZC1vcmRlci1hcHAtNzg3YjAiLCJhdWQiOiJmb29kLW9yZGVyLWFwcC03ODdiMCIsImF1dGhfdGltZSI6MTY4MzUzNTk5MCwidXNlcl9pZCI6IjBOVjZtUnJmUjNOQlZhRGF2N0JqVzFLU3FWeDIiLCJzdWIiOiIwTlY2bVJyZlIzTkJWYURhdjdCalcxS1NxVngyIiwiaWF0IjoxNjgzNTM1OTkwLCJleHAiOjE2ODM1Mzk1OTAsImVtYWlsIjoibW9tb2RvdWJhaDU0NEBnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsImZpcmViYXNlIjp7ImlkZW50aXRpZXMiOnsiZW1haWwiOlsibW9tb2RvdWJhaDU0NEBnbWFpbC5jb20iXX0sInNpZ25faW5fcHJvdmlkZXIiOiJwYXNzd29yZCJ9fQ.Mad516ZZfBr6NQ7aDwHilCy_lD8adukFStdGVtnwqtCVjrQ0En6mKhJiN8lgmx2P_ShNDE2MabCf9OQtru99L_zxLY3HqaDLybwpJv2eFo8z7-UJw6H1Ommq5nVlBj4ulfANR4MqzJGVx-1Rr56_DcHF6LPOdAOEodMrLfmjrJKdzlqMJb3PINvbvhW2tuEUx9HsPX51_roXIXsoXYYgTsPtpXhGedKXIqbUO3f9PbKBJg2GMIxEJK1b7ELa2bj2So5Swl4Xr-i8XNSXxorJKaQqIME7QHyt0pZENijaySBe30vzUuIGErSkn7jLijLgAX8cJ7_QuBimZbYxORLlaw",
+    "kind": "identitytoolkit#SignupNewUserResponse",
+    "localId": "0NV6mRrfR3NBVaDav7BjW1KSqVx2",
+    "refreshToken": "APZUo0STC4p6JLw45kVm0J6IPpxd6GLAiBjZC7vqVcgAtv8zfDT0k9XeYtkyuARtg37CvTsZowTLcW4SxxayVxnmEu1zhSlk7A4IIy0gK6KolwFc_mzigeAjR2dGXQkSOZv5NAq401eSsjO9HtJ-6rWLgrmhAwr_e3w5FsP2Lcfhpt0fJZBW9pk8avIhVVva2K9TaII0vAyaUqXmHNtLmH9nPyRChkC52VR3CaOnryCz-1CDLBvW_J4"
+  },
+  "operationType": "signIn",
+  "providerId": null,
+  "user": {
+    "_redirectEventId": "undefined",
+    "apiKey": "AIzaSyAAlNnVYbpPNvko1x8Oj2akM8i-i63Q1bg",
+    "appName": "[DEFAULT]",
+    "createdAt": "1683535990349",
+    "displayName": "undefined",
+    "email": "momodoubah544@gmail.com",
+    "emailVerified": false,
+    "isAnonymous": false,
+    "lastLoginAt": "1683535990349",
+    "phoneNumber": "undefined",
+    "photoURL": "undefined",
+    "providerData": "[Array]",
+    "stsTokenManager": "[Object]",
+    "tenantId": " undefined",
+    "uid": "0NV6mRrfR3NBVaDav7BjW1KSqVx2"
+  }
+}

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, ScrollView } from "react-native";
 import {
   Text,
@@ -7,10 +7,56 @@ import {
   TextInput,
   Button,
   Divider,
+  Card,
 } from "react-native-paper";
 import { createDocs } from "../firebase.config";
+import { signInWithEmailAndPassword, getAuth } from "firebase/auth";
 const Login = ({ navigation }) => {
+  const [emailOrPhone, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState(null);
   const theme = useTheme();
+
+  //login
+  const loginUser = async () => {
+    const authRef = getAuth();
+
+    //validate creds
+    if (emailOrPhone == "" || password == "") {
+      return setError("All Input Fields Must Be Filled");
+    }
+
+    //check if user exists
+    /*const exists = await signInWithEmailAndPassword(
+      authRef,
+      emailOrPhone,
+      password
+    )
+      .then(() => {
+        return true;
+      })
+      .catch((err) => {
+        return false;
+      });
+    console.log(emailOrPhone, password);
+
+    if (!exists) {
+      return setError(
+        "The Email/Phone You Entered Is Not Registered, Please Signup To Proceed"
+      );
+    }*/
+
+    //login
+    await signInWithEmailAndPassword(authRef, emailOrPhone, password)
+      .then((userCreds) => {
+        console.log(userCreds);
+        navigation.navigate("menu");
+      })
+      .catch((err) => {
+        //console.error(err.message);
+        setError("Incorrect Email or Password");
+      });
+  };
   return (
     <View style={{ backgroundColor: "#fff", flex: 1 }}>
       <Appbar.Header style={{ backgroundColor: "#fff" }} elevated={true}>
@@ -40,6 +86,8 @@ const Login = ({ navigation }) => {
                 label={`Email Address`}
                 keyboardType="email-address"
                 mode="outlined"
+                value={emailOrPhone}
+                onChangeText={(text) => setEmail(text)}
               />
             </View>
 
@@ -51,16 +99,31 @@ const Login = ({ navigation }) => {
                 label="Password"
                 secureTextEntry={true}
                 right={<TextInput.Icon icon="eye" />}
-                //keyboardType="visible-password"
                 mode="outlined"
+                value={password}
+                onChangeText={(text) => setPassword(text)}
               />
             </View>
+            {error && (
+              <Card
+                mode="elevated"
+                style={{
+                  borderWidth: 1,
+                  borderColor: theme.colors.error,
+                  padding: 10,
+                }}
+                // icon="alert-circle-outline"
+                //onPress={() => console.log("Pressed")}
+              >
+                <Text style={{ color: theme.colors.error, fontWeight: "bold" }}>
+                  {" "}
+                  {error}
+                </Text>
+              </Card>
+            )}
           </View>
           <View style={{ paddingVertical: 50 }}>
-            <Button
-              mode="contained"
-              onPress={() => navigation.navigate("home")}
-            >
+            <Button mode="contained" onPress={loginUser}>
               Login
             </Button>
           </View>

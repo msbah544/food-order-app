@@ -25,6 +25,7 @@ import {
   query,
   addDoc,
 } from "firebase/firestore";
+import { getAuth } from "firebase/auth";
 import { db } from "../firebase.config";
 import PayAsYouOrder from "../components/PayAsYouOrder";
 import PrepaidWallet from "../components/PrepaidWallet";
@@ -136,13 +137,15 @@ const Checkout = ({ navigation }) => {
   const placeOrder = () => {
     console.log("ordered");
     const colRef = collection(db, "cart");
+    const auth = getAuth();
 
     orderedItems.forEach((item) => {
       addDoc(colRef, {
         name: `${item.name}`,
         cost: item.cost,
         quantityOrdered: item.quantityOrdered,
-        selected: `${item.selected}`,
+        selected: item.selected,
+        studentID: `${auth.currentUser.displayName}`, //#studentID | not name
       });
     });
     addDoc(colRef, { total: total });

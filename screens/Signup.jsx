@@ -7,26 +7,121 @@ import {
   TextInput,
   Button,
   Divider,
+  Card,
 } from "react-native-paper";
-import { getAuth } from "firebase/auth";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { authRef } from "../firebase.config";
 const Signup = ({ navigation }) => {
   const [emailOrPhone, setEmailOrPhone] = useState("");
   const [password, setPassword] = useState("");
   const [studentID, setStudentID] = useState("");
+  const [error, setError] = useState("");
+  const [exists, setExists] = useState();
   const theme = useTheme();
 
   //create user
-  const createUser = () => {
+  const createUser = async () => {
     const authRef = getAuth();
 
-    createUserWithEmailAndPassword(authRef, emailOrPhone, password)
-      .then((userCreds) => {
-        console.log(userCreds);
+    //validate creds
+    if (emailOrPhone == "" || password == "" || studentID == "") {
+      setError("All Input Fields Must Be Filled");
+      return setTimeout(() => {
+        setError("");
+      }, 5000);
+    }
+
+    console.log(emailOrPhone, password);
+
+    //check if user exists
+    const check = async () => {
+      await signInWithEmailAndPassword(authRef, emailOrPhone, password)
+        .then((userCreds) => {
+          return setExists(true);
+        })
+        .catch((err) => {
+          return setExists(false);
+        });
+    };
+    check();
+    //create user
+    if (!exists) {
+      const { user } = await createUserWithEmailAndPassword(
+        authRef,
+        emailOrPhone,
+        password
+      ).catch((err) => {
+        console.log(err.message);
+        switch (err.message) {
+          case "Firebase: Error (auth/email-already-in-use).":
+            return setError(`Email address already in use.`);
+          case "Firebase: Error (auth/invalid-email).":
+            return setError(`Email address is invalid.`);
+          case "Firebase: Error (auth/operation-not-allowed).":
+            return setError(`Error during sign up.`);
+          case "Firebase: Password should be at least 6 characters (auth/weak-password).":
+            return setError(
+              "Password is not strong enough. Add additional characters including special characters and numbers."
+            );
+
+          default:
+            console.log(err.message);
+            setError("an error occured while trying to create account");
+            //setError(err.message);
+            return setTimeout(() => setError(""), 8000);
+        }
+      });
+
+      //addstudentID
+
+      updateProfile(user, {
+        displayName: studentID,
       })
-      .catch((err) => console.log(err.message));
+        .then(() => {
+          console.log(user.displayName);
+          navigation.navigate("menu");
+        })
+        .catch(
+          (err) =>
+            //setError(
+            //  "an error occured while updating studentID, deleting user.."
+            //)
+            setError(err.message)
+          //delete user
+        );
+    } else {
+      setError(`Email address already in use.`);
+      return setTimeout(() => {
+        setError("");
+      }, 5000);
+    }
+
+    // console.log(user);
+    /*.then((userCreds) => {
+        
+      })
+      .catch((err) => {
+        switch (err.message) {
+          case "auth/email-already-in-use":
+            return setError(`Email address already in use.`);
+          case "auth/invalid-email":
+            return setError(`Email address is invalid.`);
+          case "auth/operation-not-allowed":
+            return setError(`Error during sign up.`);
+          case "auth/weak-password":
+            return setError(
+              "Password is not strong enough. Add additional characters including special characters and numbers."
+            );
+
+          default:
+            console.log(err.message);
+            setError("an error occured while trying to create account");
+            return setTimeout(() => setError(""), 8000);
+        }
+      });*/
   };
+
   return (
     <View style={{ backgroundColor: "#fff", flex: 1 }}>
       <Appbar.Header style={{ backgroundColor: "#fff" }} elevated={true}>
@@ -57,7 +152,7 @@ const Signup = ({ navigation }) => {
                 keyboardType="email-address"
                 mode="outlined"
                 value={emailOrPhone}
-                onChange={(e) => setEmailOrPhone(e.target.value)}
+                onChangeText={(text) => setEmailOrPhone(text)}
               />
             </View>
 
@@ -71,9 +166,10 @@ const Signup = ({ navigation }) => {
                 right={<TextInput.Icon icon="eye" />}
                 mode="outlined"
                 value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                onChangeText={(text) => setPassword(text)}
               />
             </View>
+
             <View style={{ paddingVertical: 5 }}>
               <Text variant="titleMedium" style={{}}>
                 Enter Student ID
@@ -85,9 +181,35 @@ const Signup = ({ navigation }) => {
                 //right={<TextInput.Icon icon="eye" />}
                 mode="outlined"
                 value={studentID}
-                onChange={(e) => setStudentID(e.target.value)}
+                onChangeText={(text) => setStudentID(text)}
               />
             </View>
+            {error && (
+              <Card
+                mode="elevated"
+                style={{
+                  borderWidth: 1,
+                  borderColor: theme.colors.error,
+                  padding: 10,
+                }}
+                // icon="alert-circle-outline"
+                //onPress={() => console.log("Pressed")}
+              >
+                <Text style={{ color: theme.colors.error, fontWeight: "bold" }}>
+                  {" "}
+                  {error}
+                </Text>
+                {error == "an error occured while trying to create account" && (
+                  <>
+                    <Text style={{ textDecorationLine: "underline" }}>
+                      Possible Causes:
+                    </Text>
+                    <Text>Phone/Email has already been registered</Text>
+                    <Text>Invalid Input details</Text>
+                  </>
+                )}
+              </Card>
+            )}
           </View>
           <View style={{ paddingVertical: 50 }}>
             <Button mode="contained" onPress={createUser}>
