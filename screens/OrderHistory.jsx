@@ -117,7 +117,7 @@ const OrderHistory = ({ navigation }) => {
   return (
     <View style={{ backgroundColor: "#fff", flex: 1 }}>
       <Appbar.Header style={{ backgroundColor: "#fff" }} elevated={true}>
-        <Appbar.BackAction onPress={() => navigation.goBack()} />
+        <Appbar.BackAction onPress={() => navigation.navigate("menu")} />
         <Appbar.Content title="Order History" />
         <Appbar.Action icon="cart-outline" />
       </Appbar.Header>
@@ -182,7 +182,11 @@ const OrderHistory = ({ navigation }) => {
                         <Text>quantity: {item.quantityOrdered}</Text>
                       </View>
                       <TouchableOpacity
-                        style={{ padding: 5 }}
+                        style={{
+                          padding: 5,
+                          backgroundColor: theme.colors.elevation,
+                          borderRadius: 50,
+                        }}
                         onPress={() => deleteItem(item)}
                       >
                         <MaterialIcons

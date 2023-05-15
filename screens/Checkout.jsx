@@ -30,6 +30,8 @@ import { getAuth } from "firebase/auth";
 import { db } from "../firebase.config";
 import PayAsYouOrder from "../components/PayAsYouOrder";
 import PrepaidWallet from "../components/PrepaidWallet";
+import ModalC from "../components/ModalC";
+import ImagePickerC from "../components/ImagePicker";
 
 import {
   useFonts,
@@ -52,6 +54,8 @@ const Checkout = ({ navigation }) => {
   const [total, setTotal] = useState(0);
   const [prePaidSelected, setPrePaidSelected] = useState(false);
   const [transferSelected, setTransferSelected] = useState(false);
+  const [visible, setVisible] = useState(false);
+  const [image, setImage] = useState(null);
 
   let [fontsLoaded] = useFonts({
     SourceSansPro_200ExtraLight,
@@ -150,6 +154,12 @@ const Checkout = ({ navigation }) => {
         studentID: `${auth.currentUser.displayName}`, //#studentID | not name
       });
     });
+
+    setVisible(true);
+    setTimeout(() => {
+      setVisible(false);
+      navigation.navigate("orderHistory");
+    }, 2000);
     // addDoc(colRef, { total: total });
   };
 
@@ -161,6 +171,7 @@ const Checkout = ({ navigation }) => {
         <Appbar.Action icon="dots-vertical" />
       </Appbar.Header>
       <ScrollView showsVerticalScrollIndicator={false}>
+        <ModalC visible={visible} setVisible={setVisible} />
         <View style={{ paddingHorizontal: 20 }}>
           <View style={{}}>
             {orderedItems.length != 0 ? (
@@ -311,7 +322,8 @@ const Checkout = ({ navigation }) => {
                   mode="contained"
                   onPress={() => placeOrder()}
                   disabled={
-                    prePaidSelected == false && transferSelected == false
+                    (prePaidSelected == false && transferSelected == false) ||
+                    image == null
                       ? true
                       : false
                   }
@@ -331,6 +343,10 @@ const Checkout = ({ navigation }) => {
                   setTransferSelected={setTransferSelected}
                   setPrePaidSelected={setPrePaidSelected}
                 />
+              </View>
+              <View>
+                <Text variant="headlineSmall">Attach Receipt</Text>
+                <ImagePickerC image={image} setImage={setImage} />
               </View>
             </View>
           )}
