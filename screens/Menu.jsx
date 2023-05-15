@@ -101,6 +101,11 @@ const Menu = ({
     navigation.navigate("checkout");
   };
 
+  //navigate to cart
+  const navigateToOrderHistory = () => {
+    navigation.navigate("orderHistory");
+  };
+
   //toggle select
   const handleSelect = (item) => {
     const docRef = doc(db, "menu", item.id);
@@ -161,8 +166,8 @@ const Menu = ({
         <Appbar.BackAction onPress={() => navigation.goBack()} />
         <Appbar.Content title="Menu" />
         <Appbar.Action
-          icon="cart-check"
-          onPress={() => navigateToCheckout()}
+          icon="cart-outline"
+          onPress={() => navigateToOrderHistory()}
         ></Appbar.Action>
       </Appbar.Header>
 

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { View, ScrollView } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
   Text,
   Appbar,
@@ -15,6 +16,8 @@ const Login = ({ navigation }) => {
   const [emailOrPhone, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
+  const [studentID, setStudentID] = useState("");
+
   const theme = useTheme();
 
   //login
@@ -46,16 +49,41 @@ const Login = ({ navigation }) => {
       );
     }*/
 
-    //login
     await signInWithEmailAndPassword(authRef, emailOrPhone, password)
-      .then((userCreds) => {
-        console.log(userCreds);
-        navigation.navigate("menu");
+      .then(({ user }) => {
+        console.log(user.displayName);
+        console.log("authref", authRef.currentUser.displayName);
+        //setStudentID(userCreds.user.displayName);
+        //const value = AsyncStorage.getItem(`${process.env.STUDENT_ID}`);
+        // console.log(value);
+        /*AsyncStorage.setItem(`studentidtyewy63237273272387`, user.displayName)
+          .then((val) => {
+            console.log("val", val);
+            navigation.navigate("home");
+          })
+          .catch((err) => console.log(err.message));*/
+        //console.log("val", val);
+        navigation.navigate("home");
       })
       .catch((err) => {
         //console.error(err.message);
-        setError("Incorrect Email or Password");
+        return setError("Incorrect Email or Password");
       });
+
+    //login
+    const storeStudentID = async () => {
+      try {
+        const val = await AsyncStorage.setItem(
+          `${process.env.STUDENT_ID}`,
+          studentID
+        );
+        console.log("val", val);
+        navigation.navigate("home");
+      } catch (err) {
+        console.log(err.message);
+      }
+    };
+    //storeStudentID(userCreds.user.displayName);
   };
   return (
     <View style={{ backgroundColor: "#fff", flex: 1 }}>

@@ -9,6 +9,7 @@ import Home from "../screens/Home";
 import Menu from "../screens/Menu";
 import BottomNav from "../screens/BottomNav";
 import Checkout from "../screens/Checkout";
+import OrderHistory from "../screens/OrderHistory";
 
 const { Navigator, Screen } = createStackNavigator();
 
@@ -22,6 +23,7 @@ const MainStackNavigator = () => {
       <Screen name="menu" component={Menu} />
       <Screen name="bnav" component={BottomNav} />
       <Screen name="checkout" component={Checkout} />
+      <Screen name="orderHistory" component={OrderHistory} />
     </Navigator>
   );
 };

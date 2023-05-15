@@ -24,6 +24,7 @@ import {
   orderBy,
   query,
   addDoc,
+  serverTimestamp,
 } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 import { db } from "../firebase.config";
@@ -136,7 +137,7 @@ const Checkout = ({ navigation }) => {
 
   const placeOrder = () => {
     console.log("ordered");
-    const colRef = collection(db, "cart");
+    const colRef = collection(db, "orderedItems");
     const auth = getAuth();
 
     orderedItems.forEach((item) => {
@@ -145,10 +146,11 @@ const Checkout = ({ navigation }) => {
         cost: item.cost,
         quantityOrdered: item.quantityOrdered,
         selected: item.selected,
+        createdAt: serverTimestamp(),
         studentID: `${auth.currentUser.displayName}`, //#studentID | not name
       });
     });
-    addDoc(colRef, { total: total });
+    // addDoc(colRef, { total: total });
   };
 
   return (

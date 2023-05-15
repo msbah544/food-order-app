@@ -52,8 +52,8 @@ const Home = ({ navigation }) => {
               </View>
             </Card>
             <Card
-              disabled={true}
-              onPress={() => navigation.navigate("cart")}
+              //disabled={true}
+              onPress={() => navigation.navigate("orderHistory")}
               style={{
                 marginVertical: 10,
                 padding: 40,
